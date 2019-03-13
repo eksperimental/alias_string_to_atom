@@ -3,7 +3,7 @@ defmodule Module.AliasStringToAtomTest do
   import Module.AliasStringToAtom
   doctest Module.AliasStringToAtom
 
-  describe "alias_string_to_atom" do
+  describe "alias_string_to_atom/1" do
     test "valid ones" do
       assert alias_string_to_atom("Foo") == Foo
       assert alias_string_to_atom("Foo.Bar") == Foo.Bar
@@ -28,6 +28,30 @@ defmodule Module.AliasStringToAtomTest do
       assert alias_string_to_atom("") == :""
       assert alias_string_to_atom("nil") == nil
       assert alias_string_to_atom("Nil") == Nil
+    end
+  end
+
+  test "validate_alias_string/1" do
+    valid = ~W"
+      Elixir Module ModuleName ModuleISO ISO Module_Name Module_name Foo123 A
+    "
+
+    invalid = ~W"
+       module
+       Module-name
+       Module?
+       Module!
+       123Module
+    "
+
+    for string <- valid do
+      assert validate_alias_string(string)
+    end
+
+    refute validate_alias_string("")
+
+    for string <- invalid do
+      refute validate_alias_string(string)
     end
   end
 end
