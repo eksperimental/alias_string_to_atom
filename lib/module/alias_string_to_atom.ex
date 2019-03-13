@@ -2,7 +2,7 @@ defmodule Module.AliasStringToAtom do
   @doc """
   Converts from an alias string to an atom.
 
-  If the valid alias string is the valid string representation of an
+  If the alias string is a valid string representation of an
   alias, the atom returned in an alias.
 
   ## Examples
@@ -14,6 +14,7 @@ defmodule Module.AliasStringToAtom do
       :"Foo.invalid_alias"
 
   """
+  @spec alias_string_to_atom(String.t()) :: module | atom
   def alias_string_to_atom(string) when is_binary(string) do
     if validate_alias_string(string, true) do
       valid_alias_string_to_atom(string)
@@ -22,19 +23,17 @@ defmodule Module.AliasStringToAtom do
     end
   end
 
-  defp valid_alias_string_to_atom("Elixir" = string),
-    do: String.to_atom(string)
-
   defp valid_alias_string_to_atom("Elixir." <> _ = string),
     do: String.to_atom(string)
+
+  defp valid_alias_string_to_atom("Elixir"),
+    do: :"Elixir"
 
   defp valid_alias_string_to_atom(string),
     do: String.to_atom("Elixir." <> string)
 
-  def valid_alias_string_to_atom("", true) do
-    false
-  end
 
+  @spec validate_alias_string(String.t(), first_char? :: boolean) :: boolean
   def validate_alias_string(<<first_char, rest::binary>>, true = _first_char?)
       when first_char >= ?A and first_char <= ?Z do
     validate_alias_string(rest, false)

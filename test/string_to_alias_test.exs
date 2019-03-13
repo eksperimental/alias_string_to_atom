@@ -25,6 +25,9 @@ defmodule Module.AliasStringToAtomTest do
     test "erlang modules " do
       assert alias_string_to_atom("lists") == :lists
       assert alias_string_to_atom(":lists") == :":lists"
+      assert alias_string_to_atom("") == :""
+      assert alias_string_to_atom("nil") == nil
+      assert alias_string_to_atom("Nil") == Nil
     end
   end
 end
