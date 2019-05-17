@@ -1,7 +1,8 @@
 defmodule Module.AliasStringToAtomTest do
   use ExUnit.Case
-  import Module.AliasStringToAtom
-  doctest Module.AliasStringToAtom
+  alias Module.AliasStringToAtom, as: M
+  import M
+  doctest M
 
   describe "alias_string_to_atom/1" do
     test "valid ones" do
@@ -31,7 +32,7 @@ defmodule Module.AliasStringToAtomTest do
     end
   end
 
-  test "validate_alias_string/1" do
+  test "__validate_alias_string__/1" do
     valid = ~W"
       Elixir Module ModuleName ModuleISO ISO Module_Name Module_name Foo123 A
     "
@@ -45,13 +46,13 @@ defmodule Module.AliasStringToAtomTest do
     "
 
     for string <- valid do
-      assert validate_alias_string(string)
+      assert M.__validate_alias_string__(string)
     end
 
-    refute validate_alias_string("")
+    refute M.__validate_alias_string__("")
 
     for string <- invalid do
-      refute validate_alias_string(string)
+      refute M.__validate_alias_string__(string)
     end
   end
 end

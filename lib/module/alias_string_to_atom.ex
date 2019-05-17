@@ -13,6 +13,12 @@ defmodule Module.AliasStringToAtom do
       iex> Module.AliasStringToAtom.alias_string_to_atom("Foo.invalid_alias")
       :"Foo.invalid_alias"
 
+      iex> Module.AliasStringToAtom.alias_string_to_atom("bar")
+      :bar
+
+      iex> Module.AliasStringToAtom.alias_string_to_atom("")
+      :""
+
   """
   @spec alias_string_to_atom(String.t()) :: module | atom
   def alias_string_to_atom(string) when is_binary(string) do
@@ -23,17 +29,8 @@ defmodule Module.AliasStringToAtom do
     end
   end
 
-  defp valid_alias_string_to_atom("Elixir." <> _ = string),
-    do: String.to_atom(string)
-
-  defp valid_alias_string_to_atom("Elixir"),
-    do: :"Elixir"
-
-  defp valid_alias_string_to_atom(string),
-    do: String.to_atom("Elixir." <> string)
-
-  @spec validate_alias_string(String.t()) :: boolean
-  def validate_alias_string(alias_string) do
+  @spec __validate_alias_string__(String.t()) :: boolean
+  def __validate_alias_string__(alias_string) do
     validate_alias_string(alias_string, true)
   end
 
@@ -67,4 +64,14 @@ defmodule Module.AliasStringToAtom do
   defp validate_alias_string(_, false) do
     false
   end
+
+
+  defp valid_alias_string_to_atom("Elixir." <> _ = string),
+    do: String.to_atom(string)
+
+  defp valid_alias_string_to_atom("Elixir"),
+    do: :"Elixir"
+
+  defp valid_alias_string_to_atom(string),
+    do: String.to_atom("Elixir." <> string)
 end
