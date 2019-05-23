@@ -65,7 +65,6 @@ defmodule Module.AliasStringToAtom do
     false
   end
 
-
   defp valid_alias_string_to_atom("Elixir." <> _ = string),
     do: String.to_atom(string)
 
