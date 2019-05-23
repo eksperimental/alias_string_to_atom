@@ -1,9 +1,9 @@
 defmodule Module.AliasStringToAtom do
   @doc """
-  Converts from an alias string to an atom.
+  Converts from the string representation of a module alias, to an atom.
 
-  If the alias string is a valid string representation of an
-  alias, the atom returned in an alias.
+  If the alias string is a valid string representation of a module alias,
+  the atom returned in a module alias.
 
   ## Examples
 
